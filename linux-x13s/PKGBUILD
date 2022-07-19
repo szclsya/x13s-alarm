@@ -4,7 +4,7 @@
 buildarch=8
 
 pkgbase=linux-x13s
-_srcname=linux-5.19
+_srcname=linux-5.19.0-rc7-thinkpad-x13s
 _kernelname=${pkgbase#linux}
 _desc="ThinkPad X13s (Snapdragon 8cx Gen 3)"
 pkgver="5.19.0.rc7"
@@ -76,7 +76,9 @@ _package() {
 
   echo "Installing boot image and dtbs..."
   install -Dm644 arch/arm64/boot/Image{,.gz} -t "${pkgdir}/boot"
-  make INSTALL_DTBS_PATH="${pkgdir}/boot/dtbs" dtbs_install
+  #make INSTALL_DTBS_PATH="${pkgdir}/boot/dtbs" dtbs_install
+  # We just need the X13s dtb
+  install -Dm644 arch/arm64/boot/dts/qcom/sc8280xp-thinkpad.dtb -t "${pkgdir}/boot"
 
   echo "Installing modules..."
   make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
