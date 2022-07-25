@@ -1,0 +1,25 @@
+# Maintainer: Jake <aur@ja-ke.tech>
+# Contributor: jose <jose1711 [at] gmail (dot) com>
+# Contributor: Roman Ajsin <aysin (dot) roman [at] gmail (dot) com>
+
+pkgname=geekbench
+pkgver=5.4.4
+pkgrel=1
+pkgdesc="A cross-platform benchmark that measures processor and memory performance"
+arch=('aarch64')
+url="https://www.geekbench.com/"
+depends=('zlib' 'gcc-libs')
+license=("custom")
+conflicts=("geekbench227")
+source=("http://cdn.geekbench.com/Geekbench-${pkgver}-LinuxARMPreview.tar.gz")
+sha512sums=('30fb53698f85acf4a269d23a3bddefc815a1f7353ba6224f07486f6c1c2a843fe250c50b8e14ca44be9265e9e7002ccd6fe0de01dee3e969b1a7f93330a3a62b')
+options=('!strip')
+
+package() {
+    install -D -m755 $srcdir/Geekbench-${pkgver}-LinuxARMPreview/${pkgname}_aarch64 $pkgdir/opt/${pkgname}/${pkgname}_aarch64
+    install -D -m644 $srcdir/Geekbench-${pkgver}-LinuxARMPreview/geekbench.plar $pkgdir/opt/${pkgname}/geekbench.plar
+    install -D -m755 $srcdir/Geekbench-${pkgver}-LinuxARMPreview/${pkgname}5 $pkgdir/opt/${pkgname}/
+    install -d $pkgdir/usr/bin
+    ln -s /opt/${pkgname}/${pkgname}5 $pkgdir/usr/bin/${pkgname}
+}
+
