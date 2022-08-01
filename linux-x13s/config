@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 5.19.0-rc8 Kernel Configuration
+# Linux/arm64 5.19.0 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 12.1.0"
 CONFIG_CC_IS_GCC=y
@@ -1037,6 +1037,7 @@ CONFIG_SECRETMEM=y
 # CONFIG_ANON_VMA_NAME is not set
 CONFIG_USERFAULTFD=y
 CONFIG_HAVE_ARCH_USERFAULTFD_MINOR=y
+# CONFIG_LRU_GEN is not set
 
 #
 # Data Access Monitoring
