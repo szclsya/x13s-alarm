@@ -1,0 +1,39 @@
+pkgname="x13s-firmware"
+pkgdesc="ThinkPad X13s firmware"
+pkgver=20220815
+pkgrel=0
+arch=("any")
+options=('!strip')
+url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
+license=('GPL2' 'GPL3' 'custom')
+makedepends=('git')
+options=(!strip)
+pkgname=(x13s-firmware)
+_srcdir=linux-firmware
+
+source=("git+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git#tag=${pkgver}")
+sha256sums=('SKIP')
+
+prepare() {
+  cd linux-firmware
+
+  local _c
+  for _c in "${_backports[@]}"; do
+    git log --oneline -1 "${_c}"
+    git cherry-pick -n "${_c}"
+  done
+}
+
+package_x13s-firmware() {
+  pkgdesc+=" - X13s / Firmware for ThinkPad X13s"
+
+  install -Dt "${pkgdir}/usr/share/licenses/${pkgname}" -m644 ${_srcdir}/WHENCE
+
+  mkdir -pv "${pkgdir}"/usr/lib/firmware
+  cp -rv "${_srcdir}"/qcom "${pkgdir}"/usr/lib/firmware
+  cp -rv "${_srcdir}"/ath11k "${pkgdir}"/usr/lib/firmware
+  # Create a symlink for X13s's WiFi card
+  cd "${pkgdir}"/usr/lib/firmware/ath11k/WCN6855
+  ln -s hw2.0/ hw2.1
+}
+
