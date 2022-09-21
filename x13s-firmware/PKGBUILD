@@ -1,6 +1,6 @@
 pkgname="x13s-firmware"
 pkgdesc="ThinkPad X13s firmware"
-pkgver=20220815
+pkgver=20220913
 pkgrel=0
 arch=("any")
 options=('!strip')
