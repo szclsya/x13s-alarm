@@ -4,30 +4,31 @@
 buildarch=8
 
 pkgbase=linux-x13s
-_srcname=linux-lenovo-x13s-6.0.7
+_srcname=linux-lenovo-x13s-6.0.10
 _kernelname=${pkgbase#linux}
 _desc="ThinkPad X13s (Snapdragon 8cx Gen 3)"
-pkgver="6.0.7"
+pkgver="6.0.10"
 pkgrel=0
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc')
 options=('!strip')
-source=("https://github.com/steev/linux/archive/refs/tags/lenovo-x13s-6.0.7.tar.gz"
+source=("https://github.com/steev/linux/archive/refs/tags/lenovo-x13s-6.0.10.tar.gz"
         'config'
         'kernel.keyblock'
         'kernel_data_key.vbprivk'
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('d6291bf2b7e39c66027b5c1742938b2b'
-         'feb1801e56f6f6debc186a44cfcaed41'
+md5sums=('7ed7ef3a3b72bcf7e42eb1dc7ce66145'
+         '7f04f2e8402d7d2ea991db10f2a5ac17'
          '61c5ff73c136ed07a7aadbf58db3d96a'
          '584777ae88bce2c5659960151b64c7d8'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '3dc88030a8f2f5a5f97266d99b149f77')
+MAKEFLAGS="-j8"
 
 prepare() {
   cd $_srcname
