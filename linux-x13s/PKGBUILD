@@ -28,7 +28,6 @@ md5sums=('7ed7ef3a3b72bcf7e42eb1dc7ce66145'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '3dc88030a8f2f5a5f97266d99b149f77')
-MAKEFLAGS="-j8"
 
 prepare() {
   cd $_srcname
