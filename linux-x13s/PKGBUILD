@@ -7,14 +7,14 @@ pkgbase=linux-x13s
 _srcname=linux-lenovo-x13s
 _kernelname=${pkgbase#linux}
 _desc="ThinkPad X13s (Snapdragon 8cx Gen 3)"
-pkgver="6.2.0_rc8"
-pkgrel=0
+pkgver="6.2"
+pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc')
 options=('!strip')
-source=("${_srcname}::git+https://github.com/theironrobin/linux#branch=sc8280xp-next-20230210"
+source=("${_srcname}::git+https://github.com/steev/linux#branch=lenovo-x13s-v6.2"
         'config'
         'kernel.keyblock'
         'kernel_data_key.vbprivk'
