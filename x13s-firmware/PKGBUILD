@@ -1,7 +1,7 @@
 pkgname="x13s-firmware"
 pkgdesc="ThinkPad X13s firmware"
 pkgver=20221214
-pkgrel=0
+pkgrel=1
 arch=("any")
 options=('!strip')
 url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
@@ -11,8 +11,12 @@ options=(!strip)
 pkgname=(x13s-firmware)
 _srcdir=linux-firmware
 
-source=("git+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git#tag=${pkgver}")
-sha256sums=('SKIP')
+source=("git+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git#tag=${pkgver}"
+	"git+https://github.com/linux-surface/aarch64-firmware#commit=9f07579ee64aba56419cfd0fbbca9f26741edc90"
+        "https://git.linaro.org/people/srinivas.kandagatla/audioreach-topology.git/tree/prebuilt/SC8280XP-LENOVO-X13S-tplg.bin")
+sha256sums=('SKIP'
+	    'SKIP'
+            'SKIP')
 
 prepare() {
   cd linux-firmware
@@ -32,6 +36,13 @@ package_x13s-firmware() {
   mkdir -pv "${pkgdir}"/usr/lib/firmware
   cp -rv "${_srcdir}"/qcom "${pkgdir}"/usr/lib/firmware
   cp -rv "${_srcdir}"/ath11k "${pkgdir}"/usr/lib/firmware
+  # a690 gpu firmware
+  cp -rv "${srcdir}"/aarch64-firmware/firmware/qcom/a690_gmu.bin "${pkgdir}"/usr/lib/firmware/qcom
+  cp -rv "${srcdir}"/aarch64-firmware/firmware/qcom/a690_sqe.fw "${pkgdir}"/usr/lib/firmware/qcom
+  # bluetooth
+  cp -rv "${srcdir}"/aarch64-firmware/firmware/qca "${pkgdir}"/usr/lib/firmware
+  # sound tplg
+  cp -rv "${srcdir}"/SC8280XP-LENOVO-X13S-tplg.bin "${pkgdir}"/usr/lib/firmware/qcom/sc8280xp
   # Create a symlink for X13s's WiFi card
   cd "${pkgdir}"/usr/lib/firmware/ath11k/WCN6855
   ln -s hw2.0/ hw2.1
