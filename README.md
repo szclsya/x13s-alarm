@@ -6,6 +6,7 @@ Some packages are pre-built in my repository. For now, these packages are provid
 + `linux-x13s`: linux kernel with out-of-tree patches for X13s
 + `x13s-firmware`: firmware blob for X13s
   - Uses the official linux-firmware source, but alarm's linux-firmware is out-of-date. Will be removed when alarm's package get updated
++ `mesa-a690`: a patched version of Mesa to support a690 GPU found on 8cx Gen 3
 + `pd-mapper` `qmic` `qrtr` `rmtfs`: campaign applications for Qualcomm platforms, required for battery and charging status report
 
 To use, add this section to the end of your `/etc/pacman.conf`:
