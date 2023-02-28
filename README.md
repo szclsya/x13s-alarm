@@ -7,6 +7,7 @@ Some packages are pre-built in my repository. For now, these packages are provid
 + `x13s-firmware`: firmware blob for X13s
   - Uses the official linux-firmware source, but alarm's linux-firmware is out-of-date. Will be removed when alarm's package get updated
 + `mesa-a690`: a patched version of Mesa to support a690 GPU found on 8cx Gen 3
++ `vulkan-a690`: part of mesa project, vulkan driver for Adreno A690
 + `pd-mapper` `qmic` `qrtr` `rmtfs`: campaign applications for Qualcomm platforms, required for battery and charging status report
 
 To use, add this section to the end of your `/etc/pacman.conf`:
@@ -26,8 +27,4 @@ pacman-key --lsign 9FD0B48BBBD974B80A3310AB6462EE0B8E382F3F
 ```
 
 ## Note on `linux-x13s`
-For now, you will need `efi=novamap` as a kernel parameter to boot into the kernel. Otherwise it would just crash.
-
-You may also want `efi=noruntime` (combined it would be `efi=novamap,noruntime`) so that it would halt successfully (instead of just reboot).
-
 In order to get the battery working, install `pd-mapper` `qmic` `qrtr` `rmtfs` and enable `pd-mapper.service`
