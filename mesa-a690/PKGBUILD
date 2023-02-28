@@ -12,10 +12,10 @@
 highmem=1
 
 pkgbase=mesa-a690
-pkgname=('vulkan-mesa-layers' 'opencl-mesa' 'vulkan-radeon' 'vulkan-swrast' 'vulkan-virtio' 'vulkan-broadcom' 'vulkan-panfrost' 'libva-mesa-driver' 'mesa-vdpau' 'mesa-a690')
+pkgname=('vulkan-a690' 'mesa-a690')
 pkgdesc="An open-source implementation of the OpenGL specification"
 pkgver=22.3.6
-pkgrel=1
+pkgrel=2
 arch=('x86_64' 'aarch64')
 makedepends=('python-mako' 'libxml2' 'libx11' 'xorgproto' 'libdrm' 'libxshmfence' 'libxxf86vm'
              'libxdamage' 'libvdpau' 'libva' 'wayland' 'wayland-protocols' 'zstd' 'elfutils' 'llvm'
@@ -25,7 +25,6 @@ makedepends+=('rust' 'rust-bindgen' 'spirv-tools' 'spirv-llvm-translator') # ru
 url="https://www.mesa3d.org/"
 license=('custom')
 options=('!lto')
-conflicts=('mesa')
 source=(https://mesa.freedesktop.org/archive/mesa-${pkgver}.tar.xz{,.sig}
         0001-anv-force-MEDIA_INTERFACE_DESCRIPTOR_LOAD-reemit-aft.patch
         0002-iris-Retry-DRM_IOCTL_I915_GEM_EXECBUFFER2-on-ENOMEM.patch
@@ -72,8 +71,8 @@ build() {
     -D b_ndebug=true \
     -D b_lto=$([[ $CARCH == aarch64 ]] && echo true || echo false)  \
     -D platforms=x11,wayland \
-    -D gallium-drivers=r300,r600,radeonsi,freedreno,nouveau,swrast,virgl,zink,d3d12${GALLIUM} \
-    -D vulkan-drivers=amd,swrast,broadcom,panfrost,virtio-experimental \
+    -D gallium-drivers=radeonsi,freedreno,swrast,zink,d3d12${GALLIUM} \
+    -D vulkan-drivers=swrast,freedreno \
     -D vulkan-layers=device-select,overlay \
     -D dri3=enabled \
     -D egl=enabled \
@@ -121,6 +120,18 @@ _install() {
   done
 }
 
+package_vulkan-a690() {
+  pkgdesc="Adreno A690's Vulkan mesa driver"
+  depends=('wayland' 'libx11' 'libxshmfence' 'libelf' 'libdrm' 'llvm-libs' 'systemd-libs')
+  optdepends=('vulkan-mesa-layers: additional vulkan layers')
+  provides=('vulkan-driver')
+
+  _install fakeinstall/usr/share/vulkan/icd.d/freedreno*.json
+  _install fakeinstall/usr/lib/libvulkan_freedreno.so
+
+  install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" LICENSE
+}
+
 package_mesa-a690() {
   depends=('libdrm' 'wayland' 'libxxf86vm' 'libxdamage' 'libxshmfence' 'libelf'
            'libomxil-bellagio' 'libunwind' 'llvm-libs' 'lm_sensors' 'libglvnd'
@@ -130,8 +141,8 @@ package_mesa-a690() {
               'mesa-vdpau: for accelerated video playback'
               'libva-mesa-driver: for accelerated video playback')
   provides=('mesa-libgl' 'opengl-driver' 'mesa')
-  conflicts=('mesa-libgl' 'mesa')
-  replaces=('mesa-libgl' 'mesa')
+  conflicts=('mesa-libgl')
+  replaces=('mesa-libgl')
 
   _install fakeinstall/usr/share/drirc.d/00-mesa-defaults.conf
   _install fakeinstall/usr/share/glvnd/egl_vendor.d/50_mesa.json
@@ -155,8 +166,9 @@ package_mesa-a690() {
   # indirect rendering
   ln -s /usr/lib/libGLX_mesa.so.0 "${pkgdir}/usr/lib/libGLX_indirect.so.0"
 
+  # mesa-a690 modification: it's fine to have some remaining stuff
   # make sure there are no files left to install
-  find fakeinstall -depth -print0 | xargs -0 rmdir
+  #find fakeinstall -depth -print0 | xargs -0 rmdir
 
   install -m644 -Dt "${pkgdir}/usr/share/licenses/${pkgname}" LICENSE
 }
