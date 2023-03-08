@@ -13,8 +13,8 @@
 pkgbase=mesa
 pkgname=('vulkan-mesa-layers' 'opencl-mesa' 'vulkan-radeon' 'vulkan-swrast' 'vulkan-virtio' 'vulkan-broadcom' 'vulkan-panfrost' 'vulkan-freedreno' 'libva-mesa-driver' 'mesa-vdpau' 'mesa')
 pkgdesc="An open-source implementation of the OpenGL specification"
-pkgver=22.3.5
-pkgrel=0.2
+pkgver=22.3.6
+pkgrel=0.3
 arch=('x86_64' 'aarch64')
 makedepends=('python-mako' 'libxml2' 'libx11' 'xorgproto' 'libdrm' 'libxshmfence' 'libxxf86vm'
              'libxdamage' 'libvdpau' 'libva' 'wayland' 'wayland-protocols' 'zstd' 'elfutils' 'llvm'
@@ -29,7 +29,7 @@ source=(https://mesa.freedesktop.org/archive/mesa-${pkgver}.tar.xz{,.sig}
         add-a690-support.patch
         "allwinner-fix.patch::https://gitlab.freedesktop.org/enunes/mesa/-/commit/81e0adaebbc45a5017137c1ef36c15d52707fb20.patch"
         LICENSE)
-sha512sums=('a4cad9b7e6501678fac279bd88a37e522633c7128afa8df04982f469c930e3557bb1d05b4b0f5ae16704d8d04e50c90a7489943a48861df17dd947704c329b85'
+sha512sums=('SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -48,12 +48,12 @@ prepare() {
   # https://gitlab.freedesktop.org/mesa/mesa/-/issues/7111
   # https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/17247
   # https://github.com/HansKristian-Work/vkd3d-proton/issues/1200
-  patch -Np1 -i ../0001-anv-force-MEDIA_INTERFACE_DESCRIPTOR_LOAD-reemit-aft.patch
+  #patch -Np1 -i ../0001-anv-force-MEDIA_INTERFACE_DESCRIPTOR_LOAD-reemit-aft.patch
   patch -Np1 -i ../add-a690-support.patch
 
   # https://gitlab.freedesktop.org/mesa/mesa/-/issues/8198
   # No MR yet, but a commit: https://gitlab.freedesktop.org/enunes/mesa/-/commit/81e0adaebbc45a5017137c1ef36c15d52707fb20
-  patch -Np1 -i "${srcdir}/allwinner-fix.patch"
+  #patch -Np1 -i "${srcdir}/allwinner-fix.patch"
 }
 
 build() {
