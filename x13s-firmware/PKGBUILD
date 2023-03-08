@@ -1,7 +1,7 @@
 pkgname="x13s-firmware"
 pkgdesc="ThinkPad X13s firmware"
-pkgver=20221109
-pkgrel=0
+pkgver=20230210
+pkgrel=1
 arch=("any")
 options=('!strip')
 url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
@@ -15,11 +15,13 @@ source=("git+https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firm
         "SC8280XP-LENOVO-X13S-tplg.bin"
         "a690_gmu.bin"
         "a690_sqe.fw"
+        "hpnv21.8c"
         )
 sha256sums=('SKIP'
             'd983a32e0c873963a75dfd1197a00fa2edadd8455caab9d5d65ec2b51c65d132'
             '163c1e3126d70d36c1ad9db5dd3721969b164f9623f6a7db773677882e40936d'
             '01cacafc48ae96f061caa325a294a91024e626403b97fa556a9bcc42e4de6768'
+            '8b6a1e2d4233e0a17d5c2dce568386fe9c7974b872da47900242c3485f57d0f7'
             )
 
 prepare() {
@@ -41,6 +43,8 @@ package_x13s-firmware() {
   cp -rv "${_srcdir}"/qca "${pkgdir}"/usr/lib/firmware
   cp -rv "${_srcdir}"/qcom "${pkgdir}"/usr/lib/firmware
   cp -rv "${_srcdir}"/ath11k "${pkgdir}"/usr/lib/firmware
+  # Install bluetooth firmware for X13s
+  cp hpnv21.8c "${pkgdir}"/usr/lib/firmware/qca
   # Install gpu firmware for X13s
   cp a690_gmu.bin "${pkgdir}"/usr/lib/firmware/qcom
   cp a690_sqe.fw "${pkgdir}"/usr/lib/firmware/qcom
